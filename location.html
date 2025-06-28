@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Location - Free Hospital Directory India</title>
+    <meta name="description" content="Select your district or PIN code to get hospitals closest to you. Free treatment centers in your area.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Ad -->
+        <div class="ad-banner">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <div class="header">
+            <h1>🏥 Free Hospital Directory India</h1>
+            <p>Find government and charitable hospitals providing free treatment</p>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step completed">1</div>
+            <div class="step active">2</div>
+            <div class="step">3</div>
+        </div>
+
+        <!-- Page 2: Location Selection -->
+        <div class="content-card">
+            <h2>Choose Your Preferred Area</h2>
+            <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
+                Enter your PIN code or select your district to get hospitals closest to you in <span id="selectedStateName"></span>.
+            </p>
+            
+            <div class="form-group">
+                <label for="pincode">Enter PIN Code (Optional):</label>
+                <input type="text" id="pincode" placeholder="e.g., 110001" maxlength="6" pattern="[0-9]{6}">
+            </div>
+
+            <div class="form-group">
+                <label for="district">Or Select District:</label>
+                <select id="district">
+                    <option value="">-- Choose District --</option>
+                    <option value="all">All Districts (Complete List)</option>
+                </select>
+            </div>
+
+            <!-- In-content Ad -->
+            <div class="ad-banner">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="preview-box">
+                <h4>📋 What you'll get in your PDF:</h4>
+                <div class="hospital-item">🏥 Government District Hospitals</div>
+                <div class="hospital-item">🏥 Primary Health Centers (PHCs)</div>
+                <div class="hospital-item">🏥 Community Health Centers</div>
+                <div class="hospital-item">🏥 Charitable Hospitals & NGOs</div>
+                <div class="hospital-item">📞 Contact Numbers & Addresses</div>
+                <div class="hospital-item">🕒 Working Hours & Emergency Info</div>
+            </div>
+
+            <a href="index.html" class="btn btn-secondary">← Back</a>
+            <a href="download.html" class="btn" id="nextBtn">
+                Get My Hospital List →
+            </a>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-banner">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <!-- Sidebar Ad -->
+    <div class="sidebar">
+        <div class="ad-banner" style="margin: 0;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <script>
+        // Get state from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedState = urlParams.get('state');
+        
+        // Update state name display
+        if (selectedState) {
+            const stateNames = {
+                'andhra-pradesh': 'Andhra Pradesh',
+                'arunachal-pradesh': 'Arunachal Pradesh',
+                'assam': 'Assam',
+                'bihar': 'Bihar',
+                'chhattisgarh': 'Chhattisgarh',
+                'goa': 'Goa',
+                'gujarat': 'Gujarat',
+                'haryana': 'Haryana',
+                'himachal-pradesh': 'Himachal Pradesh',
+                'jharkhand': 'Jharkhand',
+                'karnataka': 'Karnataka',
+                'kerala': 'Kerala',
+                'madhya-pradesh': 'Madhya Pradesh',
+                'maharashtra': 'Maharashtra',
+                'manipur': 'Manipur',
+                'meghalaya': 'Meghalaya',
+                'mizoram': 'Mizoram',
+                'nagaland': 'Nagaland',
+                'odisha': 'Odisha',
+                'punjab': 'Punjab',
+                'rajasthan': 'Rajasthan',
+                'sikkim': 'Sikkim',
+                'tamil-nadu': 'Tamil Nadu',
+                'telangana': 'Telangana',
+                'tripura': 'Tripura',
+                'uttar-pradesh': 'Uttar Pradesh',
+                'uttarakhand': 'Uttarakhand',
+                'west-bengal': 'West Bengal',
+                'andaman-nicobar': 'Andaman and Nicobar Islands',
+                'chandigarh': 'Chandigarh',
+                'dadra-nagar-haveli': 'Dadra and Nagar Haveli',
+                'daman-diu': 'Daman and Diu',
+                'delhi': 'Delhi',
+                'jammu-kashmir': 'Jammu and Kashmir',
+                'ladakh': 'Ladakh',
+                'lakshadweep': 'Lakshadweep',
+                'puducherry': 'Puducherry'
+            };
+            
+            document.getElementById('selectedStateName').textContent = stateNames[selectedState] || selectedState;
+            
+            // Update districts based on state
+            updateDistricts(selectedState);
+        }
+
+        function updateDistricts(state) {
+            const districtSelect = document.getElementById('district');
+            
+            // Add some common districts (you can expand this based on actual data)
+            const commonDistricts = [
+                'Capital District', 'Central District', 'North District', 
+                'South District', 'East District', 'West District'
+            ];
+            
+            commonDistricts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.toLowerCase().replace(' ', '-');
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        }
+
+        // Update next button with parameters
+        document.getElementById('district').addEventListener('change', function() {
+            updateNextButton();
+        });
+
+        document.getElementById('pincode').addEventListener('input', function() {
+            updateNextButton();
+        });
+
+        function updateNextButton() {
+            const district = document.getElementById('district').value;
+            const pincode = document.getElementById('pincode').value;
+            const nextBtn = document.getElementById('nextBtn');
+            
+            let url = `download.html?state=${encodeURIComponent(selectedState)}`;
+            if (district) {
+                url += `&district=${encodeURIComponent(district)}`;
+            }
+            if (pincode && pincode.length === 6) {
+                url += `&pincode=${encodeURIComponent(pincode)}`;
+            }
+            
+            nextBtn.href = url;
+        }
+
+        // Initialize AdSense
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

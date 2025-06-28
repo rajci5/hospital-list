@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Hospital Directory - Free Hospital Directory India</title>
+    <meta name="description" content="Download your customized PDF list of free hospitals. Government and charitable hospitals with complete contact information.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: popupSlideIn 0.3s ease-out;
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-popup:hover {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .popup {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Ad -->
+        <div class="ad-banner">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <div class="header">
+            <h1>🏥 Free Hospital Directory India</h1>
+            <p>Find government and charitable hospitals providing free treatment</p>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step completed">1</div>
+            <div class="step completed">2</div>
+            <div class="step active">3</div>
+        </div>
+
+        <!-- Page 3: Download Page -->
+        <div class="content-card">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Preparing your customized hospital list...</p>
+            </div>
+
+            <div id="downloadContent" style="display: none;">
+                <h2>🎉 Your Hospital Directory is Ready!</h2>
+                <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
+                    Download your comprehensive PDF list of free hospitals in <span id="selectedState"></span>.
+                </p>
+
+                <div class="preview-box">
+                    <h4>📊 Your customized report includes:</h4>
+                    <div class="hospital-item">✅ <span id="hospitalCount">150+</span> verified hospitals</div>
+                    <div class="hospital-item">✅ Complete contact information</div>
+                    <div class="hospital-item">✅ Organized by location</div>
+                    <div class="hospital-item">✅ Free treatment availability details</div>
+                    <div class="hospital-item">✅ Emergency contact numbers</div>
+                </div>
+
+                <!-- Final Ad before download -->
+                <div class="ad-banner">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-XXXXXXXXXX"
+                         data-ad-slot="XXXXXXXXXX"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+
+                <button class="btn btn-download" onclick="downloadPDF()">
+                    📥 Download Hospital Directory PDF
+                </button>
+                
+                <p style="margin-top: 20px; color: #6c757d; font-size: 0.9rem;">
+                    ⚡ Instant download • 📱 Mobile friendly • 🔄 Updated monthly
+                </p>
+
+                <a href="index.html" class="btn btn-secondary">
+                    🔄 Get Directory for Another State
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-banner">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <!-- Sidebar Ad -->
+    <div class="sidebar">
+        <div class="ad-banner" style="margin: 0;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <button class="close-popup" onclick="closePopup()">&times;</button>
+            <h3 style="margin-bottom: 20px; color: #2c3e50;">🚀 Special Offer!</h3>
+            <p style="margin-bottom: 20px;">Get instant access to our premium hospital directory with exclusive features!</p>
+            
+            <!-- Popup Ad Space -->
+            <div class="ad-banner" style="margin: 15px 0; min-height: 80px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+            
+            <button class="btn" onclick="closePopup()" style="margin: 10px;">
+                Continue to Download
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let hasShownScrollPopup = false;
+        let hasShownExitPopup = false;
+
+        // Get parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedState = urlParams.get('state');
+        const selectedDistrict = urlParams.get('district');
+        const selectedPincode = urlParams.get('pincode');
+
+        // Show loading and prepare download
+        function showLoadingAndPrepareDownload() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('downloadContent').style.display = 'none';
+            
+            // Simulate processing time
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('downloadContent').style.display = 'block';
+                
+                // Update dynamic content
+                const stateNames = {
+                    'andhra-pradesh': 'Andhra Pradesh',
+                    'arunachal-pradesh': 'Arunachal Pradesh',
+                    'assam': 'Assam',
+                    'bihar': 'Bihar',
+                    'chhattisgarh': 'Chhattisgarh',
+                    'goa': 'Goa',
+                    'gujarat': 'Gujarat',
+                    'haryana': 'Haryana',
+                    'himachal-pradesh': 'Himachal Pradesh',
+                    'jharkhand': 'Jharkhand',
+                    'karnataka': 'Karnataka',
+                    'kerala': 'Kerala',
+                    'madhya-pradesh': 'Madhya Pradesh',
+                    'maharashtra': 'Maharashtra',
+                    'manipur': 'Manipur',
+                    'meghalaya': 'Meghalaya',
+                    'mizoram': 'Mizoram',
+                    'nagaland': 'Nagaland',
+                    'odisha': 'Odisha',
+                    'punjab': 'Punjab',
+                    'rajasthan': 'Rajasthan',
+                    'sikkim': 'Sikkim',
+                    'tamil-nadu': 'Tamil Nadu',
+                    'telangana': 'Telangana',
+                    'tripura': 'Tripura',
+                    'uttar-pradesh': 'Uttar Pradesh',
+                    'uttarakhand': 'Uttarakhand',
+                    'west-bengal': 'West Bengal',
+                    'andaman-nicobar': 'Andaman and Nicobar Islands',
+                    'chandigarh': 'Chandigarh',
+                    'dadra-nagar-haveli': 'Dadra and Nagar Haveli',
+                    'daman-diu': 'Daman and Diu',
+                    'delhi': 'Delhi',
+                    'jammu-kashmir': 'Jammu and Kashmir',
+                    'ladakh': 'Ladakh',
+                    'lakshadweep': 'Lakshadweep',
+                    'puducherry': 'Puducherry'
+                };
+                
+                const stateText = stateNames[selectedState] || selectedState;
+                document.getElementById('selectedState').textContent = stateText;
+                
+                // Trigger scroll popup after a delay
+                setTimeout(() => {
+                    if (!hasShownScrollPopup) {
+                        showScrollPopup();
+                    }
+                }, 3000);
+            }, 2000);
+        }
+
+        function downloadPDF() {
+            // In a real implementation, this would trigger the actual PDF download
+            alert('PDF download started! The file will be saved to your Downloads folder.');
+            
+            // Track conversion for analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    'event_category': 'PDF',
+                    'event_label': selectedState
+                });
+            }
+        }
+
+        // Popup Functions
+        function showScrollPopup() {
+            if (!hasShownScrollPopup && !localStorage.getItem('popup_shown_today')) {
+                document.getElementById('popupOverlay').style.display = 'block';
+                hasShownScrollPopup = true;
+                
+                // Set flag to not show again today
+                const today = new Date().toDateString();
+                localStorage.setItem('popup_shown_today', today);
+            }
+        }
+
+        function showExitPopup() {
+            if (!hasShownExitPopup && !localStorage.getItem('exit_popup_shown')) {
+                document.getElementById('popupOverlay').style.display = 'block';
+                hasShownExitPopup = true;
+                localStorage.setItem('exit_popup_shown', 'true');
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+
+        // Event Listeners
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                if (scrollPercent > 60 && !hasShownScrollPopup) {
+                    showScrollPopup();
+                }
+            }, 100);
+        });
+
+        // Exit intent detection
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY <= 0) {
+                showExitPopup();
+            }
+        });
+
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('popupOverlay')) {
+                closePopup();
+            }
+        });
+
+        // Initialize AdSense
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // Clear daily popup flags if it's a new day
+        const today = new Date().toDateString();
+        if (localStorage.getItem('popup_shown_today') !== today) {
+            localStorage.removeItem('popup_shown_today');
+        }
+
+        // Start the loading process when page loads
+        window.addEventListener('load', showLoadingAndPrepareDownload);
+    </script>
+</body>
+</html>

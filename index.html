@@ -9,393 +9,7 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-
-        /* Ad Spaces */
-        .ad-banner {
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-            border-radius: 10px;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            font-weight: 500;
-        }
-
-        /* Main Content Card */
-        .content-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .step {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            font-weight: bold;
-            color: #6c757d;
-            position: relative;
-        }
-
-        .step.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .step.completed {
-            background: #28a745;
-            color: white;
-        }
-
-        .step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: -25px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 2px;
-            background: #e9ecef;
-        }
-
-        .step.completed:not(:last-child)::after {
-            background: #28a745;
-        }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin: 25px 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #495057;
-            font-size: 1.1rem;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: white;
-            transition: all 0.3s ease;
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 20px 10px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-        }
-
-        .btn-download {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            font-size: 1.2rem;
-            padding: 20px 50px;
-        }
-
-        /* Pages */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Popup Overlay */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            display: none;
-            backdrop-filter: blur(5px);
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            animation: popupSlideIn 0.3s ease-out;
-        }
-
-        @keyframes popupSlideIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -60%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .close-popup:hover {
-            color: #333;
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .content-card {
-                padding: 25px;
-                margin: 15px 0;
-            }
-            
-            h2 {
-                font-size: 1.6rem;
-            }
-            
-            .step {
-                width: 35px;
-                height: 35px;
-                margin: 0 5px;
-            }
-            
-            .btn {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-            
-            .popup {
-                padding: 20px;
-                margin: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .content-card {
-                padding: 20px;
-            }
-            
-            .step {
-                width: 30px;
-                height: 30px;
-                font-size: 0.9rem;
-            }
-            
-            .btn {
-                padding: 10px 25px;
-                margin: 10px 5px;
-            }
-        }
-
-        /* Sidebar Ad */
-        .sidebar {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 160px;
-            z-index: 100;
-        }
-
-        @media (max-width: 1400px) {
-            .sidebar {
-                display: none;
-            }
-        }
-
-        .feature-list {
-            list-style: none;
-            text-align: left;
-            margin: 30px 0;
-        }
-
-        .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-list li:before {
-            content: '✓';
-            color: #28a745;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .preview-box {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .preview-box h4 {
-            color: #495057;
-            margin-bottom: 15px;
-        }
-
-        .hospital-item {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 0.9rem;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -417,172 +31,73 @@
 
         <!-- Step Indicator -->
         <div class="step-indicator">
-            <div class="step active" id="step1">1</div>
-            <div class="step" id="step2">2</div>
-            <div class="step" id="step3">3</div>
+            <div class="step active">1</div>
+            <div class="step">2</div>
+            <div class="step">3</div>
         </div>
 
         <!-- Page 1: State Selection -->
-        <div class="page active" id="page1">
-            <div class="content-card">
-                <h2>Select Your State</h2>
-                <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
-                    Choose your state to get a comprehensive list of hospitals providing free treatment in your area.
-                </p>
-                
-                <div class="form-group">
-                    <label for="state">Select State/Union Territory:</label>
-                    <select id="state" required>
-                        <option value="">-- Choose Your State --</option>
-                        <option value="andhra-pradesh">Andhra Pradesh</option>
-                        <option value="arunachal-pradesh">Arunachal Pradesh</option>
-                        <option value="assam">Assam</option>
-                        <option value="bihar">Bihar</option>
-                        <option value="chhattisgarh">Chhattisgarh</option>
-                        <option value="goa">Goa</option>
-                        <option value="gujarat">Gujarat</option>
-                        <option value="haryana">Haryana</option>
-                        <option value="himachal-pradesh">Himachal Pradesh</option>
-                        <option value="jharkhand">Jharkhand</option>
-                        <option value="karnataka">Karnataka</option>
-                        <option value="kerala">Kerala</option>
-                        <option value="madhya-pradesh">Madhya Pradesh</option>
-                        <option value="maharashtra">Maharashtra</option>
-                        <option value="manipur">Manipur</option>
-                        <option value="meghalaya">Meghalaya</option>
-                        <option value="mizoram">Mizoram</option>
-                        <option value="nagaland">Nagaland</option>
-                        <option value="odisha">Odisha</option>
-                        <option value="punjab">Punjab</option>
-                        <option value="rajasthan">Rajasthan</option>
-                        <option value="sikkim">Sikkim</option>
-                        <option value="tamil-nadu">Tamil Nadu</option>
-                        <option value="telangana">Telangana</option>
-                        <option value="tripura">Tripura</option>
-                        <option value="uttar-pradesh">Uttar Pradesh</option>
-                        <option value="uttarakhand">Uttarakhand</option>
-                        <option value="west-bengal">West Bengal</option>
-                        <option value="andaman-nicobar">Andaman and Nicobar Islands</option>
-                        <option value="chandigarh">Chandigarh</option>
-                        <option value="dadra-nagar-haveli">Dadra and Nagar Haveli</option>
-                        <option value="daman-diu">Daman and Diu</option>
-                        <option value="delhi">Delhi</option>
-                        <option value="jammu-kashmir">Jammu and Kashmir</option>
-                        <option value="ladakh">Ladakh</option>
-                        <option value="lakshadweep">Lakshadweep</option>
-                        <option value="puducherry">Puducherry</option>
-                    </select>
-                </div>
-
-                <ul class="feature-list">
-                    <li>Government hospitals with free treatment facilities</li>
-                    <li>Charitable hospitals and NGO medical centers</li>
-                    <li>Contact details and addresses included</li>
-                    <li>Regularly updated hospital information</li>
-                    <li>Organized by districts and cities</li>
-                </ul>
-
-                <button class="btn" onclick="nextPage()" id="nextBtn1" disabled>
-                    Next: Choose Location →
-                </button>
+        <div class="content-card">
+            <h2>Select Your State</h2>
+            <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
+                Choose your state to get a comprehensive list of hospitals providing free treatment in your area.
+            </p>
+            
+            <div class="form-group">
+                <label for="state">Select State/Union Territory:</label>
+                <select id="state" required>
+                    <option value="">-- Choose Your State --</option>
+                    <option value="andhra-pradesh">Andhra Pradesh</option>
+                    <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                    <option value="assam">Assam</option>
+                    <option value="bihar">Bihar</option>
+                    <option value="chhattisgarh">Chhattisgarh</option>
+                    <option value="goa">Goa</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="haryana">Haryana</option>
+                    <option value="himachal-pradesh">Himachal Pradesh</option>
+                    <option value="jharkhand">Jharkhand</option>
+                    <option value="karnataka">Karnataka</option>
+                    <option value="kerala">Kerala</option>
+                    <option value="madhya-pradesh">Madhya Pradesh</option>
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="manipur">Manipur</option>
+                    <option value="meghalaya">Meghalaya</option>
+                    <option value="mizoram">Mizoram</option>
+                    <option value="nagaland">Nagaland</option>
+                    <option value="odisha">Odisha</option>
+                    <option value="punjab">Punjab</option>
+                    <option value="rajasthan">Rajasthan</option>
+                    <option value="sikkim">Sikkim</option>
+                    <option value="tamil-nadu">Tamil Nadu</option>
+                    <option value="telangana">Telangana</option>
+                    <option value="tripura">Tripura</option>
+                    <option value="uttar-pradesh">Uttar Pradesh</option>
+                    <option value="uttarakhand">Uttarakhand</option>
+                    <option value="west-bengal">West Bengal</option>
+                    <option value="andaman-nicobar">Andaman and Nicobar Islands</option>
+                    <option value="chandigarh">Chandigarh</option>
+                    <option value="dadra-nagar-haveli">Dadra and Nagar Haveli</option>
+                    <option value="daman-diu">Daman and Diu</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="jammu-kashmir">Jammu and Kashmir</option>
+                    <option value="ladakh">Ladakh</option>
+                    <option value="lakshadweep">Lakshadweep</option>
+                    <option value="puducherry">Puducherry</option>
+                </select>
             </div>
-        </div>
 
-        <!-- Page 2: Zip Code Selection -->
-        <div class="page" id="page2">
-            <div class="content-card">
-                <h2>Choose Your Preferred Area</h2>
-                <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
-                    Enter your PIN code or select your district to get hospitals closest to you.
-                </p>
-                
-                <div class="form-group">
-                    <label for="pincode">Enter PIN Code (Optional):</label>
-                    <input type="text" id="pincode" placeholder="e.g., 110001" maxlength="6" pattern="[0-9]{6}">
-                </div>
+            <ul class="feature-list">
+                <li>Government hospitals with free treatment facilities</li>
+                <li>Charitable hospitals and NGO medical centers</li>
+                <li>Contact details and addresses included</li>
+                <li>Regularly updated hospital information</li>
+                <li>Organized by districts and cities</li>
+            </ul>
 
-                <div class="form-group">
-                    <label for="district">Or Select District:</label>
-                    <select id="district">
-                        <option value="">-- Choose District --</option>
-                        <option value="all">All Districts (Complete List)</option>
-                        <!-- Districts will be populated based on state selection -->
-                    </select>
-                </div>
-
-                <!-- In-content Ad -->
-                <div class="ad-banner">
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-XXXXXXXXXX"
-                         data-ad-slot="XXXXXXXXXX"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-
-                <div class="preview-box">
-                    <h4>📋 What you'll get in your PDF:</h4>
-                    <div class="hospital-item">🏥 Government District Hospitals</div>
-                    <div class="hospital-item">🏥 Primary Health Centers (PHCs)</div>
-                    <div class="hospital-item">🏥 Community Health Centers</div>
-                    <div class="hospital-item">🏥 Charitable Hospitals & NGOs</div>
-                    <div class="hospital-item">📞 Contact Numbers & Addresses</div>
-                    <div class="hospital-item">🕒 Working Hours & Emergency Info</div>
-                </div>
-
-                <button class="btn btn-secondary" onclick="prevPage()">← Back</button>
-                <button class="btn" onclick="nextPage()" id="nextBtn2">
-                    Get My Hospital List →
-                </button>
-            </div>
-        </div>
-
-        <!-- Page 3: Download Page -->
-        <div class="page" id="page3">
-            <div class="content-card">
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Preparing your customized hospital list...</p>
-                </div>
-
-                <div id="downloadContent" style="display: none;">
-                    <h2>🎉 Your Hospital Directory is Ready!</h2>
-                    <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
-                        Download your comprehensive PDF list of free hospitals in <span id="selectedState"></span>.
-                    </p>
-
-                    <div class="preview-box">
-                        <h4>📊 Your customized report includes:</h4>
-                        <div class="hospital-item">✅ <span id="hospitalCount">150+</span> verified hospitals</div>
-                        <div class="hospital-item">✅ Complete contact information</div>
-                        <div class="hospital-item">✅ Organized by location</div>
-                        <div class="hospital-item">✅ Free treatment availability details</div>
-                        <div class="hospital-item">✅ Emergency contact numbers</div>
-                    </div>
-
-                    <!-- Final Ad before download -->
-                    <div class="ad-banner">
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-XXXXXXXXXX"
-                             data-ad-slot="XXXXXXXXXX"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                    </div>
-
-                    <button class="btn btn-download" onclick="downloadPDF()">
-                        📥 Download Hospital Directory PDF
-                    </button>
-                    
-                    <p style="margin-top: 20px; color: #6c757d; font-size: 0.9rem;">
-                        ⚡ Instant download • 📱 Mobile friendly • 🔄 Updated monthly
-                    </p>
-
-                    <button class="btn btn-secondary" onclick="startOver()">
-                        🔄 Get Directory for Another State
-                    </button>
-                </div>
-            </div>
+            <a href="location.html" class="btn" id="nextBtn" style="pointer-events: none; opacity: 0.6;">
+                Next: Choose Location →
+            </a>
         </div>
 
         <!-- Bottom Ad -->
@@ -632,207 +147,24 @@
     </div>
 
     <script>
-        let currentPage = 1;
-        let selectedState = '';
-        let selectedDistrict = '';
-        let hasShownScrollPopup = false;
-        let hasShownExitPopup = false;
-
         // State selection handler
         document.getElementById('state').addEventListener('change', function() {
-            selectedState = this.value;
-            const nextBtn = document.getElementById('nextBtn1');
-            nextBtn.disabled = !selectedState;
+            const selectedState = this.value;
+            const nextBtn = document.getElementById('nextBtn');
             
-            // Update districts based on state (simplified - you can expand this)
-            updateDistricts();
-        });
-
-        // District/PIN code handlers
-        document.getElementById('district').addEventListener('change', function() {
-            selectedDistrict = this.value;
-        });
-
-        document.getElementById('pincode').addEventListener('input', function() {
-            const pincode = this.value;
-            if (pincode.length === 6) {
-                selectedDistrict = pincode;
+            if (selectedState) {
+                nextBtn.style.pointerEvents = 'auto';
+                nextBtn.style.opacity = '1';
+                nextBtn.href = `location.html?state=${encodeURIComponent(selectedState)}`;
+            } else {
+                nextBtn.style.pointerEvents = 'none';
+                nextBtn.style.opacity = '0.6';
+                nextBtn.href = '#';
             }
         });
 
-        function updateDistricts() {
-            const districtSelect = document.getElementById('district');
-            districtSelect.innerHTML = '<option value="">-- Choose District --</option><option value="all">All Districts (Complete List)</option>';
-            
-            // Add some common districts (you can expand this based on actual data)
-            const commonDistricts = [
-                'Capital District', 'Central District', 'North District', 
-                'South District', 'East District', 'West District'
-            ];
-            
-            commonDistricts.forEach(district => {
-                const option = document.createElement('option');
-                option.value = district.toLowerCase().replace(' ', '-');
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            });
-        }
-
-        function nextPage() {
-            if (currentPage < 3) {
-                // Hide current page
-                document.getElementById(`page${currentPage}`).classList.remove('active');
-                document.getElementById(`step${currentPage}`).classList.remove('active');
-                document.getElementById(`step${currentPage}`).classList.add('completed');
-                
-                currentPage++;
-                
-                // Show next page
-                document.getElementById(`page${currentPage}`).classList.add('active');
-                document.getElementById(`step${currentPage}`).classList.add('active');
-                
-                // Special handling for page 3
-                if (currentPage === 3) {
-                    showLoadingAndPrepareDownload();
-                }
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 1) {
-                document.getElementById(`page${currentPage}`).classList.remove('active');
-                document.getElementById(`step${currentPage}`).classList.remove('active');
-                
-                currentPage--;
-                
-                document.getElementById(`page${currentPage}`).classList.add('active');
-                document.getElementById(`step${currentPage}`).classList.remove('completed');
-                document.getElementById(`step${currentPage}`).classList.add('active');
-                
-                window.scrollTo(0, 0);
-            }
-        }
-
-        function showLoadingAndPrepareDownload() {
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('downloadContent').style.display = 'none';
-            
-            // Simulate processing time
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('downloadContent').style.display = 'block';
-                
-                // Update dynamic content
-                const stateText = document.getElementById('state').options[document.getElementById('state').selectedIndex].text;
-                document.getElementById('selectedState').textContent = stateText;
-                
-                // Trigger scroll popup after a delay
-                setTimeout(() => {
-                    if (!hasShownScrollPopup) {
-                        showScrollPopup();
-                    }
-                }, 3000);
-            }, 2000);
-        }
-
-        function downloadPDF() {
-            // In a real implementation, this would trigger the actual PDF download
-            // For now, we'll simulate it
-            alert('PDF download started! The file will be saved to your Downloads folder.');
-            
-            // Track conversion for analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'download', {
-                    'event_category': 'PDF',
-                    'event_label': selectedState
-                });
-            }
-        }
-
-        function startOver() {
-            currentPage = 1;
-            selectedState = '';
-            selectedDistrict = '';
-            
-            // Reset all pages
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active', 'completed');
-            });
-            
-            document.getElementById('page1').classList.add('active');
-            document.getElementById('step1').classList.add('active');
-            
-            // Reset form
-            document.getElementById('state').value = '';
-            document.getElementById('district').value = '';
-            document.getElementById('pincode').value = '';
-            document.getElementById('nextBtn1').disabled = true;
-            
-            window.scrollTo(0, 0);
-        }
-
-        // Popup Functions
-        function showScrollPopup() {
-            if (!hasShownScrollPopup && !localStorage.getItem('popup_shown_today')) {
-                document.getElementById('popupOverlay').style.display = 'block';
-                hasShownScrollPopup = true;
-                
-                // Set flag to not show again today
-                const today = new Date().toDateString();
-                localStorage.setItem('popup_shown_today', today);
-            }
-        }
-
-        function showExitPopup() {
-            if (!hasShownExitPopup && !localStorage.getItem('exit_popup_shown')) {
-                document.getElementById('popupOverlay').style.display = 'block';
-                hasShownExitPopup = true;
-                localStorage.setItem('exit_popup_shown', 'true');
-            }
-        }
-
-        function closePopup() {
-            document.getElementById('popupOverlay').style.display = 'none';
-        }
-
-        // Event Listeners
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-                if (scrollPercent > 60 && !hasShownScrollPopup) {
-                    showScrollPopup();
-                }
-            }, 100);
-        });
-
-        // Exit intent detection
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY <= 0) {
-                showExitPopup();
-            }
-        });
-
-        // Close popup when clicking outside
-        document.getElementById('popupOverlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('popupOverlay')) {
-                closePopup();
-            }
-        });
-
-        // Initialize AdSense (replace with your actual publisher ID)
+        // Initialize AdSense
         (adsbygoogle = window.adsbygoogle || []).push({});
-
-        // Clear daily popup flags if it's a new day
-        const today = new Date().toDateString();
-        if (localStorage.getItem('popup_shown_today') !== today) {
-            localStorage.removeItem('popup_shown_today');
-        }
     </script>
 </body>
 </html>
