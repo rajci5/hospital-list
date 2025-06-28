@@ -264,11 +264,12 @@ select:focus, input:focus {
     /* Enhanced state dropdown for mobile */
     #state {
         padding: 20px;
-        padding-right: 3.5rem; /* Make space for arrow */
+        padding-right: 3rem; /* Adjust space for smaller arrow */
         font-size: 1.2rem;
         border: 4px solid #ff6b35;
-        background: linear-gradient(135deg, #fff 0%, #fff8f5 100%);
         box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+        background-size: 1.2rem 1.2rem;
+        background-position: right 1rem center;
     }
     
     #state:focus {
@@ -313,10 +314,12 @@ select:focus, input:focus {
     /* Extra emphasis for very small screens */
     #state {
         padding: 22px;
-        padding-right: 3.5rem; /* Make space for arrow */
+        padding-right: 3rem; /* Adjust space for smaller arrow */
         font-size: 1.3rem;
         border: 5px solid #ff6b35;
         font-weight: 700;
+        background-size: 1.2rem 1.2rem;
+        background-position: right 1rem center;
     }
 }
 
