@@ -100,7 +100,7 @@
 
         <!-- Page 3: Download Page -->
         <div class="content-card">
-            <div class="loading" id="loading">
+            <div class="loading" id="loading" style="display: block;">
                 <div class="spinner"></div>
                 <p>Preparing your customized hospital list...</p>
             </div>
@@ -336,7 +336,14 @@
         }
 
         // Start the loading process when page loads
-        window.addEventListener('load', showLoadingAndPrepareDownload);
+        window.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
+        
+        // Also start immediately if DOM is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
+        } else {
+            showLoadingAndPrepareDownload();
+        }
     </script>
 </body>
 </html>
