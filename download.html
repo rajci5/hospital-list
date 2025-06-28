@@ -298,13 +298,8 @@
             localStorage.removeItem('popup_shown_today');
         }
 
-        // Start the loading process once the DOM is ready.
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
-        } else {
-            // The DOM is already loaded
-            showLoadingAndPrepareDownload();
-        }
+        // Start the loading process once the page and all resources are fully loaded.
+        window.addEventListener('load', showLoadingAndPrepareDownload);
     </script>
 </body>
 </html>
