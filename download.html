@@ -298,8 +298,10 @@
             localStorage.removeItem('popup_shown_today');
         }
 
-        // Start the loading process once the page and all resources are fully loaded.
-        window.addEventListener('load', showLoadingAndPrepareDownload);
+        // Start the loading process.
+        // The script is at the end of the body, so the DOM is ready.
+        // The setTimeout inside the function will provide a delay for assets to load.
+        showLoadingAndPrepareDownload();
     </script>
 </body>
 </html>
