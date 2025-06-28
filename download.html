@@ -140,24 +140,18 @@
 
         // Show loading and prepare download
         function showLoadingAndPrepareDownload() {
-            console.log('Starting loading process...');
             const loadingElement = document.getElementById('loading');
             const downloadElement = document.getElementById('downloadContent');
-            
-            console.log('Loading element:', loadingElement);
-            console.log('Download element:', downloadElement);
             
             if (loadingElement && downloadElement) {
                 loadingElement.style.display = 'block';
                 downloadElement.style.display = 'none';
-                console.log('Elements visibility set');
                 
                 // Simulate processing time with shorter delay for mobile
                 const isMobile = window.innerWidth <= 768;
                 const delay = isMobile ? 1500 : 2000;
                 
                 setTimeout(() => {
-                    console.log('Showing download content...');
                     loadingElement.style.display = 'none';
                     downloadElement.style.display = 'block';
                     
@@ -172,9 +166,7 @@
                     }, 3000);
                 }, delay);
             } else {
-                console.error('Loading or download content elements not found');
-                console.error('Loading element found:', !!loadingElement);
-                console.error('Download element found:', !!downloadElement);
+                console.error('Crucial content elements could not be found on the download page.');
             }
         }
         
@@ -298,10 +290,9 @@
             localStorage.removeItem('popup_shown_today');
         }
 
-        // Start the loading process.
-        // The script is at the end of the body, so the DOM is ready.
-        // The setTimeout inside the function will provide a delay for assets to load.
-        showLoadingAndPrepareDownload();
+        // Start the loading process by deferring it slightly.
+        // This helps prevent race conditions with other scripts (like AdSense) on Android browsers.
+        setTimeout(showLoadingAndPrepareDownload, 50);
     </script>
 </body>
 </html>
