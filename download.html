@@ -9,7 +9,338 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        /* Ad Spaces */
+        .ad-banner {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* Main Content Card */
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+            color: #6c757d;
+            position: relative;
+        }
+
+        .step.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 2px;
+            background: #e9ecef;
+        }
+
+        .step.completed:not(:last-child)::after {
+            background: #28a745;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            font-size: 1.2rem;
+            padding: 20px 50px;
+        }
+
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: popupSlideIn 0.3s ease-out;
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-popup:hover {
+            color: #333;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-card {
+                padding: 25px;
+                margin: 15px 0;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .step {
+                width: 35px;
+                height: 35px;
+                margin: 0 5px;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .popup {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .step {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                margin: 10px 5px;
+            }
+        }
+
+        /* Sidebar Ad */
+        .sidebar {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            z-index: 100;
+        }
+
+        @media (max-width: 1400px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        .preview-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .preview-box h4 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .hospital-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .error-message {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -37,15 +368,19 @@
 
         <!-- Page 3: Download Page -->
         <div class="content-card">
-            <div class="loading" id="loading" style="display: block;">
+            <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <p>Preparing your customized hospital list...</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <strong>Loading Issue:</strong> If this message persists, please <a href="javascript:location.reload()">refresh the page</a> or <a href="index.html">start over</a>.
             </div>
 
             <div id="downloadContent" style="display: none;">
                 <h2>🎉 Your Hospital Directory is Ready!</h2>
                 <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
-                    Download your comprehensive PDF list of free hospitals in <span id="selectedState"></span>.
+                    Download your comprehensive PDF list of free hospitals in <span id="selectedState">your selected area</span>.
                 </p>
 
                 <div class="preview-box">
@@ -128,171 +463,274 @@
     </div>
 
     <script>
-        window.console = window.console || { log: function() {}, error: function() {} };
+        // Improved Android compatibility with better error handling
         let hasShownScrollPopup = false;
         let hasShownExitPopup = false;
+        let loadingTimeout;
 
-        // Get parameters from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const selectedState = urlParams.get('state');
-        const selectedDistrict = urlParams.get('district');
-        const selectedPincode = urlParams.get('pincode');
+        // Get parameters from URL with fallback
+        function getUrlParams() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                return {
+                    state: urlParams.get('state') || 'unknown',
+                    district: urlParams.get('district') || '',
+                    pincode: urlParams.get('pincode') || ''
+                };
+            } catch (e) {
+                console.error('Error parsing URL parameters:', e);
+                return { state: 'unknown', district: '', pincode: '' };
+            }
+        }
 
-        // Show loading and prepare download
+        const params = getUrlParams();
+        const selectedState = params.state;
+
+        // State name mapping
+        const stateNames = {
+            'andhra-pradesh': 'Andhra Pradesh',
+            'arunachal-pradesh': 'Arunachal Pradesh',
+            'assam': 'Assam',
+            'bihar': 'Bihar',
+            'chhattisgarh': 'Chhattisgarh',
+            'goa': 'Goa',
+            'gujarat': 'Gujarat',
+            'haryana': 'Haryana',
+            'himachal-pradesh': 'Himachal Pradesh',
+            'jharkhand': 'Jharkhand',
+            'karnataka': 'Karnataka',
+            'kerala': 'Kerala',
+            'madhya-pradesh': 'Madhya Pradesh',
+            'maharashtra': 'Maharashtra',
+            'manipur': 'Manipur',
+            'meghalaya': 'Meghalaya',
+            'mizoram': 'Mizoram',
+            'nagaland': 'Nagaland',
+            'odisha': 'Odisha',
+            'punjab': 'Punjab',
+            'rajasthan': 'Rajasthan',
+            'sikkim': 'Sikkim',
+            'tamil-nadu': 'Tamil Nadu',
+            'telangana': 'Telangana',
+            'tripura': 'Tripura',
+            'uttar-pradesh': 'Uttar Pradesh',
+            'uttarakhand': 'Uttarakhand',
+            'west-bengal': 'West Bengal',
+            'andaman-nicobar': 'Andaman and Nicobar Islands',
+            'chandigarh': 'Chandigarh',
+            'dadra-nagar-haveli': 'Dadra and Nagar Haveli',
+            'daman-diu': 'Daman and Diu',
+            'delhi': 'Delhi',
+            'jammu-kashmir': 'Jammu and Kashmir',
+            'ladakh': 'Ladakh',
+            'lakshadweep': 'Lakshadweep',
+            'puducherry': 'Puducherry',
+            'unknown': 'your selected area'
+        };
+
+        // Improved loading function with better error handling
         function showLoadingAndPrepareDownload() {
             const loadingElement = document.getElementById('loading');
             const downloadElement = document.getElementById('downloadContent');
+            const errorElement = document.getElementById('errorMessage');
             
-            if (loadingElement && downloadElement) {
-                loadingElement.style.display = 'block';
-                downloadElement.style.display = 'none';
-                
-                // Simulate processing time with shorter delay for mobile
-                const isMobile = window.innerWidth <= 768;
-                const delay = isMobile ? 1500 : 2000;
-                
-                setTimeout(() => {
+            // Ensure elements exist
+            if (!loadingElement || !downloadElement) {
+                console.error('Critical DOM elements missing');
+                if (errorElement) {
+                    errorElement.style.display = 'block';
+                }
+                return;
+            }
+
+            // Show loading
+            loadingElement.style.display = 'block';
+            downloadElement.style.display = 'none';
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+            
+            // Set timeout to show error if loading takes too long
+            loadingTimeout = setTimeout(() => {
+                if (loadingElement.style.display !== 'none') {
+                    console.warn('Loading took too long, showing error message');
+                    if (errorElement) {
+                        errorElement.style.display = 'block';
+                    }
+                }
+            }, 10000); // 10 seconds timeout
+            
+            // Simulate processing with mobile-optimized timing
+            const isMobile = window.innerWidth <= 768;
+            const delay = isMobile ? 1200 : 2000;
+            
+            setTimeout(() => {
+                try {
+                    // Clear the timeout since we're proceeding normally
+                    clearTimeout(loadingTimeout);
+                    
                     loadingElement.style.display = 'none';
                     downloadElement.style.display = 'block';
                     
-                    // Update dynamic content
+                    // Update state display
                     updateStateDisplay();
                     
-                    // Trigger scroll popup after a delay
+                    // Trigger popup after delay
                     setTimeout(() => {
                         if (!hasShownScrollPopup) {
                             showScrollPopup();
                         }
-                    }, 3000);
-                }, delay);
-            } else {
-                console.error('Crucial content elements could not be found on the download page.');
-            }
+                    }, 2000);
+                    
+                } catch (e) {
+                    console.error('Error in loading process:', e);
+                    if (errorElement) {
+                        errorElement.style.display = 'block';
+                    }
+                }
+            }, delay);
         }
         
         function updateStateDisplay() {
-            const stateNames = {
-                    'andhra-pradesh': 'Andhra Pradesh',
-                    'arunachal-pradesh': 'Arunachal Pradesh',
-                    'assam': 'Assam',
-                    'bihar': 'Bihar',
-                    'chhattisgarh': 'Chhattisgarh',
-                    'goa': 'Goa',
-                    'gujarat': 'Gujarat',
-                    'haryana': 'Haryana',
-                    'himachal-pradesh': 'Himachal Pradesh',
-                    'jharkhand': 'Jharkhand',
-                    'karnataka': 'Karnataka',
-                    'kerala': 'Kerala',
-                    'madhya-pradesh': 'Madhya Pradesh',
-                    'maharashtra': 'Maharashtra',
-                    'manipur': 'Manipur',
-                    'meghalaya': 'Meghalaya',
-                    'mizoram': 'Mizoram',
-                    'nagaland': 'Nagaland',
-                    'odisha': 'Odisha',
-                    'punjab': 'Punjab',
-                    'rajasthan': 'Rajasthan',
-                    'sikkim': 'Sikkim',
-                    'tamil-nadu': 'Tamil Nadu',
-                    'telangana': 'Telangana',
-                    'tripura': 'Tripura',
-                    'uttar-pradesh': 'Uttar Pradesh',
-                    'uttarakhand': 'Uttarakhand',
-                    'west-bengal': 'West Bengal',
-                    'andaman-nicobar': 'Andaman and Nicobar Islands',
-                    'chandigarh': 'Chandigarh',
-                    'dadra-nagar-haveli': 'Dadra and Nagar Haveli',
-                    'daman-diu': 'Daman and Diu',
-                    'delhi': 'Delhi',
-                    'jammu-kashmir': 'Jammu and Kashmir',
-                    'ladakh': 'Ladakh',
-                    'lakshadweep': 'Lakshadweep',
-                    'puducherry': 'Puducherry'
-            };
-            
-            const selectedStateElement = document.getElementById('selectedState');
-            if (selectedState && selectedStateElement) {
-                const stateText = stateNames[selectedState] || selectedState;
-                selectedStateElement.textContent = stateText;
+            try {
+                const selectedStateElement = document.getElementById('selectedState');
+                if (selectedState && selectedStateElement) {
+                    const stateText = stateNames[selectedState] || selectedState;
+                    selectedStateElement.textContent = stateText;
+                }
+            } catch (e) {
+                console.error('Error updating state display:', e);
             }
         }
 
         function downloadPDF() {
-            // In a real implementation, this would trigger the actual PDF download
-            alert('PDF download started! The file will be saved to your Downloads folder.');
-            
-            // Track conversion for analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'download', {
-                    'event_category': 'PDF',
-                    'event_label': selectedState
-                });
+            try {
+                // Simulate PDF download - replace with actual implementation
+                alert('PDF download started! The file will be saved to your Downloads folder.');
+                
+                // Analytics tracking
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'download', {
+                        'event_category': 'PDF',
+                        'event_label': selectedState
+                    });
+                }
+            } catch (e) {
+                console.error('Error in download function:', e);
+                alert('Download failed. Please try again.');
             }
         }
 
-        // Popup Functions
+        // Popup Functions with error handling
         function showScrollPopup() {
-            if (!hasShownScrollPopup && !localStorage.getItem('popup_shown_today')) {
-                document.getElementById('popupOverlay').style.display = 'block';
-                hasShownScrollPopup = true;
-                
-                // Set flag to not show again today
-                const today = new Date().toDateString();
-                localStorage.setItem('popup_shown_today', today);
+            try {
+                if (!hasShownScrollPopup && !localStorage.getItem('popup_shown_today')) {
+                    const popupElement = document.getElementById('popupOverlay');
+                    if (popupElement) {
+                        popupElement.style.display = 'block';
+                        hasShownScrollPopup = true;
+                        
+                        const today = new Date().toDateString();
+                        localStorage.setItem('popup_shown_today', today);
+                    }
+                }
+            } catch (e) {
+                console.error('Error showing scroll popup:', e);
             }
         }
 
         function showExitPopup() {
-            if (!hasShownExitPopup && !localStorage.getItem('exit_popup_shown')) {
-                document.getElementById('popupOverlay').style.display = 'block';
-                hasShownExitPopup = true;
-                localStorage.setItem('exit_popup_shown', 'true');
+            try {
+                if (!hasShownExitPopup && !localStorage.getItem('exit_popup_shown')) {
+                    const popupElement = document.getElementById('popupOverlay');
+                    if (popupElement) {
+                        popupElement.style.display = 'block';
+                        hasShownExitPopup = true;
+                        localStorage.setItem('exit_popup_shown', 'true');
+                    }
+                }
+            } catch (e) {
+                console.error('Error showing exit popup:', e);
             }
         }
 
         function closePopup() {
-            document.getElementById('popupOverlay').style.display = 'none';
+            try {
+                const popupElement = document.getElementById('popupOverlay');
+                if (popupElement) {
+                    popupElement.style.display = 'none';
+                }
+            } catch (e) {
+                console.error('Error closing popup:', e);
+            }
         }
 
-        // Event Listeners
+        // Event Listeners with error handling
         let scrollTimeout;
         window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-                if (scrollPercent > 60 && !hasShownScrollPopup) {
-                    showScrollPopup();
+            try {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    if (scrollPercent > 60 && !hasShownScrollPopup) {
+                        showScrollPopup();
+                    }
+                }, 100);
+            } catch (e) {
+                console.error('Error in scroll handler:', e);
+            }
+        });
+
+        // Exit intent detection (desktop only)
+        if (!('ontouchstart' in window)) {
+            document.addEventListener('mouseleave', (e) => {
+                try {
+                    if (e.clientY <= 0) {
+                        showExitPopup();
+                    }
+                } catch (e) {
+                    console.error('Error in mouseleave handler:', e);
                 }
-            }, 100);
-        });
-
-        // Exit intent detection
-        document.addEventListener('mouseleave', (e) => {
-            if (e.clientY <= 0) {
-                showExitPopup();
-            }
-        });
-
-        // Close popup when clicking outside
-        document.getElementById('popupOverlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('popupOverlay')) {
-                closePopup();
-            }
-        });
-
-        // Initialize AdSense
-        (adsbygoogle = window.adsbygoogle || []).push({});
-
-        // Clear daily popup flags if it's a new day
-        const today = new Date().toDateString();
-        if (localStorage.getItem('popup_shown_today') !== today) {
-            localStorage.removeItem('popup_shown_today');
+            });
         }
 
-        // Start the loading process by deferring it slightly.
-        // This helps prevent race conditions with other scripts (like AdSense) on Android browsers.
-        setTimeout(showLoadingAndPrepareDownload, 50);
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            try {
+                if (e.target.id === 'popupOverlay') {
+                    closePopup();
+                }
+            } catch (e) {
+                console.error('Error in click handler:', e);
+            }
+        });
+
+        // Initialize AdSense safely
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error('AdSense initialization error:', e);
+        }
+
+        // Clear daily popup flags if it's a new day
+        try {
+            const today = new Date().toDateString();
+            if (localStorage.getItem('popup_shown_today') !== today) {
+                localStorage.removeItem('popup_shown_today');
+            }
+        } catch (e) {
+            console.error('Error managing popup flags:', e);
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(showLoadingAndPrepareDownload, 100);
+            });
+        } else {
+            // DOM is already ready
+            setTimeout(showLoadingAndPrepareDownload, 100);
+        }
     </script>
 </body>
 </html>
