@@ -147,6 +147,9 @@
     </div>
 
     <script>
+        let hasShownScrollPopup = false;
+        let hasShownExitPopup = false;
+
         // State selection handler
         document.getElementById('state').addEventListener('change', function() {
             const selectedState = this.value;
@@ -162,6 +165,62 @@
                 nextBtn.href = '#';
             }
         });
+
+        // Popup Functions
+        function showScrollPopup() {
+            if (!hasShownScrollPopup && !localStorage.getItem('popup_shown_today')) {
+                document.getElementById('popupOverlay').style.display = 'block';
+                hasShownScrollPopup = true;
+                
+                // Set flag to not show again today
+                const today = new Date().toDateString();
+                localStorage.setItem('popup_shown_today', today);
+            }
+        }
+
+        function showExitPopup() {
+            if (!hasShownExitPopup && !localStorage.getItem('exit_popup_shown')) {
+                document.getElementById('popupOverlay').style.display = 'block';
+                hasShownExitPopup = true;
+                localStorage.setItem('exit_popup_shown', 'true');
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').style.display = 'none';
+        }
+
+        // Event Listeners
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                if (scrollPercent > 60 && !hasShownScrollPopup) {
+                    showScrollPopup();
+                }
+            }, 100);
+        });
+
+        // Exit intent detection
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY <= 0) {
+                showExitPopup();
+            }
+        });
+
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('popupOverlay')) {
+                closePopup();
+            }
+        });
+
+        // Clear daily popup flags if it's a new day
+        const today = new Date().toDateString();
+        if (localStorage.getItem('popup_shown_today') !== today) {
+            localStorage.removeItem('popup_shown_today');
+        }
 
         // Initialize AdSense
         (adsbygoogle = window.adsbygoogle || []).push({});
