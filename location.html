@@ -37,21 +37,17 @@
 
         <!-- Page 2: Location Selection -->
         <div class="content-card">
-            <h2>Choose Your Preferred Area</h2>
+            <h2>Select Hospital Category</h2>
             <p style="margin-bottom: 30px; color: #6c757d; font-size: 1.1rem;">
-                Enter your PIN code or select your district to get hospitals closest to you in <span id="selectedStateName"></span>.
+                Select the type of hospital you are looking for in <span id="selectedStateName"></span>.
             </p>
             
             <div class="form-group">
-                <label for="pincode">Enter PIN Code (Optional):</label>
-                <input type="text" id="pincode" placeholder="e.g., 110001" maxlength="6" pattern="[0-9]{6}">
-            </div>
-
-            <div class="form-group">
-                <label for="district">Or Select District:</label>
-                <select id="district">
-                    <option value="">-- Choose District --</option>
-                    <option value="all">All Districts (Complete List)</option>
+                <label for="category">Select Hospital Category:</label>
+                <select id="category">
+                    <option value="">-- Choose Category --</option>
+                    <option value="private">Private Hospital</option>
+                    <option value="government">Government Hospital</option>
                 </select>
             </div>
 
@@ -76,7 +72,7 @@
             </div>
 
             <a href="index.html" class="btn btn-secondary">← Back</a>
-            <a href="download.html" class="btn" id="nextBtn">
+            <a href="#" class="btn" id="nextBtn" style="pointer-events: none; opacity: 0.6;">
                 Get My Hospital List →
             </a>
         </div>
@@ -178,50 +174,27 @@
             
             document.getElementById('selectedStateName').textContent = stateNames[selectedState] || selectedState;
             
-            // Update districts based on state
-            updateDistricts(selectedState);
-        }
-
-        function updateDistricts(state) {
-            const districtSelect = document.getElementById('district');
-            
-            // Add some common districts (you can expand this based on actual data)
-            const commonDistricts = [
-                'Capital District', 'Central District', 'North District', 
-                'South District', 'East District', 'West District'
-            ];
-            
-            commonDistricts.forEach(district => {
-                const option = document.createElement('option');
-                option.value = district.toLowerCase().replace(' ', '-');
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            });
         }
 
         // Update next button with parameters
-        document.getElementById('district').addEventListener('change', function() {
-            updateNextButton();
-        });
-
-        document.getElementById('pincode').addEventListener('input', function() {
+        document.getElementById('category').addEventListener('change', function() {
             updateNextButton();
         });
 
         function updateNextButton() {
-            const district = document.getElementById('district').value;
-            const pincode = document.getElementById('pincode').value;
+            const category = document.getElementById('category').value;
             const nextBtn = document.getElementById('nextBtn');
             
-            let url = `download.html?state=${encodeURIComponent(selectedState)}`;
-            if (district) {
-                url += `&district=${encodeURIComponent(district)}`;
+            if (category) {
+                const url = `download.html?state=${encodeURIComponent(selectedState)}&category=${encodeURIComponent(category)}`;
+                nextBtn.href = url;
+                nextBtn.style.pointerEvents = 'auto';
+                nextBtn.style.opacity = '1';
+            } else {
+                nextBtn.href = '#';
+                nextBtn.style.pointerEvents = 'none';
+                nextBtn.style.opacity = '0.6';
             }
-            if (pincode && pincode.length === 6) {
-                url += `&pincode=${encodeURIComponent(pincode)}`;
-            }
-            
-            nextBtn.href = url;
         }
 
         // Popup Functions

@@ -475,11 +475,12 @@
                 return {
                     state: urlParams.get('state') || 'unknown',
                     district: urlParams.get('district') || '',
-                    pincode: urlParams.get('pincode') || ''
+                    pincode: urlParams.get('pincode') || '',
+                    category: urlParams.get('category') || ''
                 };
             } catch (e) {
                 console.error('Error parsing URL parameters:', e);
-                return { state: 'unknown', district: '', pincode: '' };
+                return { state: 'unknown', district: '', pincode: '', category: '' };
             }
         }
 
