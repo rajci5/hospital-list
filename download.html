@@ -202,16 +202,37 @@
 
         // Show loading and prepare download
         function showLoadingAndPrepareDownload() {
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('downloadContent').style.display = 'none';
+            console.log('Starting loading process...');
+            const loadingElement = document.getElementById('loading');
+            const downloadElement = document.getElementById('downloadContent');
             
-            // Simulate processing time
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('downloadContent').style.display = 'block';
+            if (loadingElement && downloadElement) {
+                loadingElement.style.display = 'block';
+                downloadElement.style.display = 'none';
                 
-                // Update dynamic content
-                const stateNames = {
+                // Simulate processing time
+                setTimeout(() => {
+                    console.log('Showing download content...');
+                    loadingElement.style.display = 'none';
+                    downloadElement.style.display = 'block';
+                    
+                    // Update dynamic content
+                    updateStateDisplay();
+                    
+                    // Trigger scroll popup after a delay
+                    setTimeout(() => {
+                        if (!hasShownScrollPopup) {
+                            showScrollPopup();
+                        }
+                    }, 3000);
+                }, 2000);
+            } else {
+                console.error('Loading or download content elements not found');
+            }
+        }
+        
+        function updateStateDisplay() {
+            const stateNames = {
                     'andhra-pradesh': 'Andhra Pradesh',
                     'arunachal-pradesh': 'Arunachal Pradesh',
                     'assam': 'Assam',
@@ -249,18 +270,13 @@
                     'ladakh': 'Ladakh',
                     'lakshadweep': 'Lakshadweep',
                     'puducherry': 'Puducherry'
-                };
-                
+            };
+            
+            const selectedStateElement = document.getElementById('selectedState');
+            if (selectedState && selectedStateElement) {
                 const stateText = stateNames[selectedState] || selectedState;
-                document.getElementById('selectedState').textContent = stateText;
-                
-                // Trigger scroll popup after a delay
-                setTimeout(() => {
-                    if (!hasShownScrollPopup) {
-                        showScrollPopup();
-                    }
-                }, 3000);
-            }, 2000);
+                selectedStateElement.textContent = stateText;
+            }
         }
 
         function downloadPDF() {
@@ -336,12 +352,10 @@
         }
 
         // Start the loading process when page loads
-        window.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
-        
-        // Also start immediately if DOM is already loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
         } else {
+            // DOM is already loaded, start immediately
             showLoadingAndPrepareDownload();
         }
     </script>
