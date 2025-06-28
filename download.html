@@ -297,44 +297,13 @@
             localStorage.removeItem('popup_shown_today');
         }
 
-        // Start the loading process when page loads
-        function initializePage() {
-            console.log('Page initializing...');
-            console.log('Document ready state:', document.readyState);
-            
-            // Force show loading immediately
-            const loadingElement = document.getElementById('loading');
-            const downloadElement = document.getElementById('downloadContent');
-            
-            if (loadingElement) {
-                loadingElement.style.display = 'block';
-                console.log('Loading element shown');
-            }
-            if (downloadElement) {
-                downloadElement.style.display = 'none';
-                console.log('Download content hidden');
-            }
-            
-            // Start the loading process
-            setTimeout(showLoadingAndPrepareDownload, 100);
-        }
-        
-        // Multiple event listeners to ensure it works on all devices
+        // Start the loading process once the DOM is ready.
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializePage);
+            document.addEventListener('DOMContentLoaded', showLoadingAndPrepareDownload);
         } else {
-            initializePage();
+            // The DOM is already loaded
+            showLoadingAndPrepareDownload();
         }
-        
-        // Backup initialization
-        window.addEventListener('load', function() {
-            console.log('Window load event fired');
-            const loadingElement = document.getElementById('loading');
-            if (loadingElement && loadingElement.style.display === 'none') {
-                console.log('Backup initialization triggered');
-                initializePage();
-            }
-        });
     </script>
 </body>
 </html>
